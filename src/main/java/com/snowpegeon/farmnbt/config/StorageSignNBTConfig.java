@@ -19,6 +19,7 @@ import org.bukkit.plugin.Plugin;
 public class StorageSignNBTConfig {
 
   private static final String PLUGIN_PATH = "plugins/StorageSign";
+  private static final String OMINOUS_BANNER_PATH = "ominusBunner";
   private FileConfiguration config = null;
   private File configFile;
   private String file;
@@ -50,9 +51,7 @@ public class StorageSignNBTConfig {
    * デフォルトのConfigファイルの保存.
    */
   public void saveDefaultConfig() {
-    if (!configFile.exists()) {
-      saveConfig();
-    }
+    saveConfig();
   }
 
   /**
@@ -66,7 +65,10 @@ public class StorageSignNBTConfig {
       return;
     }
 
+    YamlConfiguration co = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8));
     config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8)));
+    // 中身は問答無用で上書き
+    config.set(OMINOUS_BANNER_PATH, co.get(OMINOUS_BANNER_PATH));
   }
 
   /**
@@ -83,7 +85,8 @@ public class StorageSignNBTConfig {
       return;
     }
     try {
-      getConfig().save(configFile);
+      config.options().copyDefaults(true);
+      config.save(configFile);
     } catch (IOException ex) {
       plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
     }
@@ -98,7 +101,7 @@ public class StorageSignNBTConfig {
   }
 
   public String getOminousBannerNBT(String version){
-    List<Map<?, ?>> l = (List<Map<?, ?>>) config.getMapList("ominusBunner");
+    List<Map<?, ?>> l = (List<Map<?, ?>>) config.getMapList(OMINOUS_BANNER_PATH);
     List<Map<String, String>> list = (List<Map<String, String>>) (List<?>) l;
 
     return extractNbtForVersion(l, version).orElse("");

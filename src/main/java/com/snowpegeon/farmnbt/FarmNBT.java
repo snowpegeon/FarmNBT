@@ -20,7 +20,7 @@ public class FarmNBT extends JavaPlugin implements Listener {
         // storageSignNBT.configのセットアップ
         StorageSignNBTConfig ssConfigClass = new StorageSignNBTConfig(this);
         FileConfiguration keyConfig = ssConfigClass.getConfig();
-        keyConfig.options().copyDefaults(true);
+        keyConfig.options().copyDefaults(false);
         // 特性上、何度も上書き処理を走らせたくないため、上書き制御付きのdefaultConfigを呼ぶ
         // このファイル自体は子のプラグインでは利用せず、StorageSignでのみ使用
         ssConfigClass.saveDefaultConfig();
