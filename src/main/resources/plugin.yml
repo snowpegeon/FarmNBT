@@ -1,0 +1,4 @@
+name: FarmNBT
+version: '1.0'
+main: com.snowpegeon.farmnbt.FarmNBT
+api-version: '1.21.4'
