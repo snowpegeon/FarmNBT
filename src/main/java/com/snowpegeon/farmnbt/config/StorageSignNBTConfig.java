@@ -65,10 +65,12 @@ public class StorageSignNBTConfig {
       return;
     }
 
-    YamlConfiguration co = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8));
-    config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8)));
+    YamlConfiguration conf = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8));
+    config.setDefaults(conf);
+    saveConfig();
     // 中身は問答無用で上書き
-    config.set(OMINOUS_BANNER_PATH, co.get(OMINOUS_BANNER_PATH));
+    config.set(OMINOUS_BANNER_PATH, conf.get(OMINOUS_BANNER_PATH));
+    saveConfig();
   }
 
   /**
